@@ -34,6 +34,16 @@ import org.apache.commons.lang3.StringUtils;
  * A chess game, as defined by the specifications of the Portable Game Notation (PGN) format.
  */
 public class Game {
+	
+	public static boolean isParsable(Game game) {
+		if ("chess960".equalsIgnoreCase(game.getVariant())) {
+    		return false;
+    	}
+		if ("chess 960".equalsIgnoreCase(game.getVariant())) {
+    		return false;
+    	}
+		return true;
+	}
 
     private final Round round;
     private String gameId;
@@ -60,6 +70,8 @@ public class Game {
     private StringBuilder moveText;
     private String opening;
     private String variation;
+    private String variant;
+    private Throwable exceptionInParsing; 
 
     /**
      * Constructs a new chess game.
@@ -1100,5 +1112,21 @@ public class Game {
             this.size = 0;
         }
     }
+
+	public String getVariant() {
+		return variant;
+	}
+
+	public void setVariant(String variant) {
+		this.variant = variant;
+	}
+
+	public Throwable getExceptionInParsing() {
+		return exceptionInParsing;
+	}
+
+	public void setExceptionInParsing(Throwable exceptionInParsing) {
+		this.exceptionInParsing = exceptionInParsing;
+	}
 
 }
